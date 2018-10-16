@@ -13,6 +13,7 @@ public class DriverSingleton {
 
     private DriverSingleton(){};
 
+
     public static WebDriver getDriver(){
         if (null == driver){
             System.setProperty(WEBDRIVER_CHROMEDRIVER, CHROMEDRIVER_CHROMEDRIVER_EXE_PATH);

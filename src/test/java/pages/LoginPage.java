@@ -1,9 +1,11 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
 public class LoginPage extends AbstractPage
@@ -20,8 +22,11 @@ public class LoginPage extends AbstractPage
 	@FindBy(xpath = "//*[@value='Войти']")
 	private WebElement buttonSubmit;
 
-	@FindBy(xpath = "//*[@id='PH_user-email']")
+	@FindBy(id = "PH_user-email")
 	private WebElement linkLoggedInUser;
+
+	@FindBy(xpath = "//a[@id='PH_logoutLink']")
+	private WebElement linkLogOff;
 
 	public LoginPage(WebDriver driver)
 	{
@@ -46,6 +51,17 @@ public class LoginPage extends AbstractPage
 
 	public String getLoggedInUserName()
 	{
+		try {
+			Thread.sleep(5000);
+			linkLoggedInUser.getAttribute("innerText");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return linkLoggedInUser.getAttribute("innerText");
+	}
+
+	public void logout(){
+		linkLogOff.click();
+		System.out.println("Log off explored explored successfully");
 	}
 }

@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,18 +9,26 @@ import org.openqa.selenium.support.PageFactory;
 public class CreateNewMailPage extends AbstractPage{
 
     // Подготовка элементов страницы.
-    @FindBy(xpath = "//a[@data-title='Написать письмо (N)']")
+    @FindBy(xpath = "//*[@id='b-toolbar__left']/div/div/div[2]/div/a/span")
     private WebElement button_new_mail;
 
-    @FindBy(xpath = "//*[@id=\"js-pjax-container\"]/div[2]/div/div[1]/div/div[1]/a[1]")
-    private WebElement button_view_all;
+    @FindBy(xpath = "//textarea[@tabindex='4']")
+    private WebElement field_addressee;
 
-    @FindBy(xpath = "//*[@id=\"js-pjax-container\"]/div[2]/div/div[1]/nav/ul[2]/li[14]/a")
-    private WebElement hrefTesting;
+    @FindBy(xpath = "//input[@name='Subject']")
+    private WebElement field_subject;
 
-    @FindBy(xpath = "//*[@id=\"js-pjax-container\"]/div[1]/div/h1")
-    private WebElement message_testing;
+    @FindBy(id = "tinymce")
+    private WebElement field_body;
 
+    @FindBy(xpath = "//div[@data-group='save-more']")
+    private WebElement button_save;
+
+    @FindBy(xpath = "//span[contains(text(),'Сохранить черновик')]")
+    private WebElement button_save_draft;
+
+    @FindBy(xpath = "//a[@href='/messages/drafts']")
+    private WebElement mail_in_drafts;
 
     public CreateNewMailPage(WebDriver driver)
     {
@@ -27,26 +36,33 @@ public class CreateNewMailPage extends AbstractPage{
         PageFactory.initElements(this.driver, this);
     }
 
-    public void clickOnMarketplace()
+    public void clickOnNewMail()
     {
-        hrefMarketplace.click();
-        System.out.println("Go to <Marketplace> explored successfully");
+        button_new_mail.click();
+        System.out.println("Click on <New Mail> explored successfully");
     }
 
-    public void clickOnViewAll()
+
+    public void fields(String addressee, String subject, String body)
     {
-        button_view_all.click();
-        System.out.println("Go to <Marketplace> explored successfully");
+        field_addressee.sendKeys(addressee);
+        field_subject.sendKeys(subject);
+        driver.switchTo().frame(driver.findElement(By.xpath(".//tr[@class='mceFirst mceLast']//iframe")));
+        driver.findElement(By.id("tinymce")).click();
+        field_body.click();
+        field_body.clear();
+        field_body.sendKeys(body);
+        driver.switchTo().defaultContent();
+        button_save.click();
+        button_save_draft.click();
+        System.out.println("Addressee performed");
+        System.out.println("Subject performed");
+        System.out.println("Body performed");
     }
 
-    public void clickOnTesting()
+    public String getDraft()
     {
-        hrefTesting.click();
-        System.out.println("Go to <Marketplace> explored successfully");
-    }
-
-    public boolean messageTestingEquals(String search_string) {
-        return message_testing.getText().equals(search_string);
+        return mail_in_drafts.getAttribute("innerText");
     }
 
     @Override
