@@ -18,8 +18,8 @@ public class DriverSingleton {
         if (null == driver){
             System.setProperty(WEBDRIVER_CHROMEDRIVER, CHROMEDRIVER_CHROMEDRIVER_EXE_PATH);
             driver = new ChromeDriver();
-            driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             driver.manage().window().maximize();
             System.out.println("Browser was successfully started");
         }

@@ -36,20 +36,20 @@ public class MailAutomationTest {
     public void oneCanCheckInDrafts(){
         steps.clickOnDrafts();
         steps.openDraft();
-        Assert.assertTrue(steps.isMessageInDraftFolder(SUBJECT, ADDRESSEE, BODY));
+        Assert.assertTrue(steps.isMessageInDraftFolder(ADDRESSEE, BODY, SUBJECT));
     }
 
     @Test(description = "Check the drafts folder", priority = 4)
     public void oneCanCheckDraftsFolder(){
         steps.clickOnSend();
         steps.clickOnDraftsFolder();
-        Assert.assertTrue(steps.isMessageNotInDrafts(SUBJECT, ADDRESSEE, BODY),"Drafts folder is not epmty!");
+        Assert.assertTrue(steps.isMessageNotInDrafts(ADDRESSEE, BODY, SUBJECT),"Drafts folder is not epmty!");
     }
 
     @Test(description = "Check the sents folder", priority = 5)
     public void oneCanCheckSentsFolder(){
         steps.clickOnSentsFolder();
-        Assert.assertTrue(steps.isMessageInSentFolder(SUBJECT, ADDRESSEE, BODY),"Sents folder is epmty!");
+        Assert.assertTrue(steps.isMessageInSentFolder(ADDRESSEE, BODY, SUBJECT),"Sents folder is epmty!");
         steps.clickOnLogOut();
     }
 

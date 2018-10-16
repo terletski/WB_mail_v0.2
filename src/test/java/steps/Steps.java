@@ -57,9 +57,9 @@ public class Steps {
         draftsPage.clickOnDrafts();
     }
 
-    public boolean isMessageInDraftFolder(String subject, String target, String message) {
+    public boolean isMessageInDraftFolder(String target, String message, String subject) {
         DraftsPage draftsPage = new DraftsPage(driver);
-        return draftsPage.isMessageInDrafts(subject, target, message);
+        return draftsPage.isMessageInDrafts(target, message, subject);
     }
 
     public void openDraft(){
