@@ -12,7 +12,6 @@ public class LoginPage extends AbstractPage
 {
 	private final String BASE_URL = "https://mail.ru";
 
-	// Подготовка элементов страницы.
 	@FindBy(xpath = "//*[@id='mailbox:login']")
 	private WebElement inputLogin;
 
@@ -38,7 +37,7 @@ public class LoginPage extends AbstractPage
 	public void openPage()
 	{
 		driver.navigate().to(BASE_URL);
-		System.out.println("Login page opened");
+		logger.info("Login page opened");
 	}
 
 	public void login(String username, String password)
@@ -46,22 +45,17 @@ public class LoginPage extends AbstractPage
 		inputLogin.sendKeys(username);
 		inputPassword.sendKeys(password);
 		buttonSubmit.click();
-		System.out.println("Login performed");
+		logger.info("Login performed");
 	}
 
 	public String getLoggedInUserName()
 	{
-		try {
-			Thread.sleep(5000);
-			linkLoggedInUser.getAttribute("innerText");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		waitForElementVisible(linkLoggedInUser);
 		return linkLoggedInUser.getAttribute("innerText");
 	}
 
 	public void logout(){
 		linkLogOff.click();
-		System.out.println("Log off explored explored successfully");
+		logger.info("Log off explored explored successfully");
 	}
 }

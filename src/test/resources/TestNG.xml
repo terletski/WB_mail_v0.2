@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "MailTestSuite">
+
+    <test name="Scenario1">
+        <classes>
+            <class name="AtTstCreateNewMailSaveInDraftsAndSend"/>
+        </classes>
+    </test>
+
+    <test name="Scenario2">
+        <classes>
+            <class name="AtTstCreateNewMailAndDelete"/>
+        </classes>
+    </test>
+
+    <test name="Scenario3">
+        <classes>
+            <class name="AtTstCreateNewMailAndDragNDrop"/>
+        </classes>
+    </test>
+
+</suite>

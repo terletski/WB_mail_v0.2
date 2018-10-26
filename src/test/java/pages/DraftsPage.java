@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.ByAll;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
 
 import java.util.List;
 
@@ -17,11 +17,10 @@ public class DraftsPage extends AbstractPage {
     private String BASEURL = "https://e.mail.ru/messages/drafts/";
     private int index;
 
-    // Подготовка элементов страницы.
-    @FindBy(xpath = "//*[@id='b-nav_folders']/div/div[3]/a/span")
+    @FindBy(xpath = "//div[@class='b-nav b-nav_folders b-nav_icons b-nav_settings-on-hover']//a[@href='/messages/drafts/']")
     private WebElement button_drafts;
 
-    @FindBy(xpath = "//*[@id='b-letters']/div[1]/div[5]/div/div[2]/div")
+    @FindBy(xpath = "//div[@class='b-datalist__body']")
     private List<WebElement> listOfDrafts;
 
     @FindBy(xpath = "//div[@data-name='send']")
@@ -39,20 +38,16 @@ public class DraftsPage extends AbstractPage {
     }
 
     public void clickOnDrafts() {
-        try {
-            Thread.sleep(5000);
-            button_drafts.click();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-            System.out.println("Click on <Drafts> explored successfully");
+        wait.until(ExpectedConditions
+                .presenceOfElementLocated(By.xpath("//div[@class='b-nav b-nav_folders b-nav_icons b-nav_settings-on-hover']//a[@href='/messages/drafts/']")));
+        button_drafts.click();
+        logger.info("Click on <Drafts> explored successfully");
     }
 
     public boolean isMessageInDrafts(String target, String message, String subject){
         int index = 0;
-        List<WebElement> drafts = driver.findElements(By.xpath("//div[@class='b-datalist__item js-datalist-item b-datalist__item_last']//div[@class='b-datalist__item__panel']"));
+        List<WebElement> drafts = driver.findElements(By.xpath("//*[@id='b-letters']/div[1]/div[5]/div/div[2]/div/div/a/div[4]/div[3]"));
         for (WebElement draft: drafts) {
-            Assert.assertEquals(draft.getAttribute("innerText"), subject + message  + target,"111111111");
             System.out.println("Letter: " + draft.getAttribute("innerText"));
             if (draft.getAttribute("innerText").contains(subject + message  + target)) {
                 return true;

@@ -1,15 +1,14 @@
 package steps;
 
 import driverSingleton.DriverSingleton;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.CreateNewMailPage;
-import pages.DraftsPage;
-import pages.LoginPage;
-import pages.SentPage;
+import pages.*;
 
 public class Steps {
     private WebDriver driver;
@@ -87,14 +86,66 @@ public class Steps {
         sentPage.clickOnSentsFolder();
     }
 
-    public boolean isMessageInSentFolder(String subject, String target, String message){
+    public boolean isMessageInSents(String target, String message, String subject){
         SentPage sentPage = new SentPage(driver);
-        return sentPage.isMessageInSents(subject, target, message);
+        return sentPage.isMessageInSents(target, message, subject);
     }
 
     public void clickOnLogOut(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.logout();
+    }
+
+    public void clickOnCheckboxSelectAll(){
+        RecyclePage recyclePage = new RecyclePage(driver);
+        recyclePage.clickOnCheckboxSelectAll();
+    }
+
+    public void clickOnDelete(){
+        RecyclePage recyclePage = new RecyclePage(driver);
+        recyclePage.clickOnDelete();
+    }
+
+    public void clickOnRecycleFolder(){
+        RecyclePage recyclePage = new RecyclePage(driver);
+        recyclePage.clickOnRecycleFolder();
+    }
+
+    public boolean isMessageInRecycle(String subject){
+        RecyclePage recyclePage = new RecyclePage(driver);
+        return recyclePage.isMessageInRecycle(subject);
+    }
+
+    public void dragNDropSpam(){
+        DroppablePage droppablePage = new DroppablePage(driver);
+        droppablePage.dragNDropSpam();
+    }
+
+    public void clickOnSpamFolder(){
+        DroppablePage droppablePage = new DroppablePage(driver);
+        droppablePage.clickOnSpam();
+    }
+
+    public boolean isMessageInSpamFolder(String subject, String message) {
+        DroppablePage droppablePage = new DroppablePage(driver);
+        return droppablePage.isMessageInSpam(subject, message);
+    }
+
+    public void clickOnLetterInSpam(){
+        SpamPage spamPage = new SpamPage(driver);
+        spamPage.clickOnLetterInSpam();
+    }
+
+    public void changeTheMessage(String body){
+        SpamPage spamPage = new SpamPage(driver);
+        spamPage.fields(body);
+    }
+
+    public boolean hasToGetDraft(String body){
+        SpamPage spamPage = new SpamPage(driver);
+        String actualDraft = spamPage.getDraft().trim().toLowerCase();
+        System.out.println("Saved in: " + actualDraft);
+        return actualDraft.equals(body);
     }
 }
 

@@ -1,6 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CreateNewMailPage extends AbstractPage{
 
-    // Подготовка элементов страницы.
     @FindBy(xpath = "//*[@id='b-toolbar__left']/div/div/div[2]/div/a/span")
     private WebElement button_new_mail;
 
@@ -30,6 +29,7 @@ public class CreateNewMailPage extends AbstractPage{
     @FindBy(xpath = "//a[@href='/messages/drafts']")
     private WebElement mail_in_drafts;
 
+
     public CreateNewMailPage(WebDriver driver)
     {
         super(driver);
@@ -39,7 +39,7 @@ public class CreateNewMailPage extends AbstractPage{
     public void clickOnNewMail()
     {
         button_new_mail.click();
-        System.out.println("Click on <New Mail> explored successfully");
+        logger.info("Click on <New Mail> explored successfully");
     }
 
 
@@ -47,17 +47,15 @@ public class CreateNewMailPage extends AbstractPage{
     {
         field_addressee.sendKeys(addressee);
         field_subject.sendKeys(subject);
-        driver.switchTo().frame(driver.findElement(By.xpath(".//tr[@class='mceFirst mceLast']//iframe")));
-        driver.findElement(By.id("tinymce")).click();
-        field_body.click();
-        field_body.clear();
-        field_body.sendKeys(body);
+        driver.switchTo().frame(0);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].textContent= arguments[1];", field_body,body);
         driver.switchTo().defaultContent();
         button_save.click();
         button_save_draft.click();
-        System.out.println("Addressee performed");
-        System.out.println("Subject performed");
-        System.out.println("Body performed");
+        logger.info("Addressee performed");
+        logger.info("Subject performed");
+        logger.info("Body performed");
     }
 
     public String getDraft()
