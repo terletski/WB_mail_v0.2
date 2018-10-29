@@ -38,9 +38,7 @@ public class DraftsPage extends AbstractPage {
     }
 
     public void clickOnDrafts() {
-        wait.until(ExpectedConditions
-                .presenceOfElementLocated(By.xpath("//div[@class='b-nav b-nav_folders b-nav_icons b-nav_settings-on-hover']//a[@href='/messages/drafts/']")));
-        button_drafts.click();
+        waitForElementVisible(button_drafts);
         logger.info("Click on <Drafts> explored successfully");
     }
 

@@ -1,5 +1,7 @@
 package driverSingleton;
 
+import factorymethod.ChromeDriverCreator;
+import factorymethod.WebDriverCreator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -15,7 +17,7 @@ public class DriverSingleton {
     private static WebDriver driver;
     private static WebDriver instance;
     private static final String WEBDRIVER_CHROMEDRIVER = "webdriver.chrome.driver";
-    private static final String CHROMEDRIVER_CHROMEDRIVER_EXE_PATH = ".\\chromedriver\\chromedriver.exe";
+    private static final String CHROMEDRIVER_CHROMEDRIVER_EXE_PATH = "./chromedriver/chromedriver.exe";
 
     private DriverSingleton(){};
 
@@ -28,6 +30,8 @@ public class DriverSingleton {
 
     public static WebDriver getDriver(){
         if (null == driver){
+//            WebDriverCreator creator = new ChromeDriverCreator();
+//            driver = creator.createWebDriver();
 //            System.setProperty(WEBDRIVER_CHROMEDRIVER, CHROMEDRIVER_CHROMEDRIVER_EXE_PATH);
 //            driver = new ChromeDriver();
             try {
